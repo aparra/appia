@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+#################################################################
+
+	USAGE:
+		Now:
+		ant -f build-release.xml
+		
+		Previously:
+		ant -DAPPIA.release=<release_tag> -f build-release.xml
+#################################################################
+-->
+
+<project basedir="." default="all" name="APPIA releases">
+    <property name="APPIA.web" location="web"/>
+	<property name="APPIA.temp" location="tmp"/>
+	
+    <target name="init">
+		<mkdir dir="${APPIA.web}"/>
+    		<mkdir dir="${APPIA.temp}"/>
+  	</target>
+
+    <!-- ================================= 
+          target: clean              
+         ================================= -->
+    <target name="clean" description=" ">
+    	<delete dir="${APPIA.web}"/>
+    	<delete dir="${APPIA.temp}"/>
+    </target>
+	
+    <!-- ================================= 
+          target: export              
+         ================================= -->
+    <target name="export" depends="init" description=" ">
+    	<exec dir="." executable="svn">
+    	  <arg line="co https://appia.svn.sourceforge.net/svnroot/appia/trunk ${APPIA.temp}"/>
+    	</exec>
+    	<!--cvs command="export" cvsroot="${APPIA.cvsRoot}" package="appia" dest="${APPIA.temp}" tag="${APPIA.release}"/-->
+    </target>
+		
+    <!-- ================================= 
+          target: structure
+         ================================= -->
+	<target name="structure" depends="export">
+		<property file="${APPIA.temp}/appia/build.properties"/>
+		<property name="APPIA.rootdir" value="appia-${APPIA.version}"/>
+		<!--mkdir dir="${APPIA.rootdir}"/-->
+    		<move file="${APPIA.temp}/appia" tofile="${APPIA.rootdir}"/>
+		<delete dir="${APPIA.temp}"/>
+		<chmod perm="ugo+x" dir="${APPIA.rootdir}/bin" includes="*.sh" verbose="true" />
+    </target>
+
+    <!-- ================================= 
+          target: src              
+         ================================= -->
+    <target name="src" depends="structure" description="">
+		<move file="${APPIA.rootdir}" tofile="${APPIA.rootdir}-src"/>
+        <tar basedir="." destfile="${APPIA.web}/${APPIA.releasefilename}-${APPIA.version}-src.tgz" compression="gzip" includes="${APPIA.rootdir}-src/**"/>
+		<move file="${APPIA.rootdir}-src" tofile="${APPIA.rootdir}"/>
+    </target>
+
+    <!-- ================================= 
+          target: bin              
+         ================================= -->
+    <target name="bin" depends="structure" description="Build the binary version of Appia.">
+        <ant dir="${APPIA.rootdir}" antfile="build.xml" target="dist"/>
+    	<mkdir dir="${APPIA.web}/${APPIA.rootdir}-bin"/>
+    	<copy todir="${APPIA.web}/${APPIA.rootdir}-bin">
+    		<fileset dir="${APPIA.rootdir}/dist">
+    			<include name="*"/>
+    		</fileset>
+    		<fileset dir="${APPIA.rootdir}">
+				<include name="LICENSE"/>
+				<include name="README"/>
+				<include name="CHANGES"/>
+				<include name="*.properties"/>
+    		</fileset>
+    	</copy>
+    	<mkdir dir="${APPIA.web}/${APPIA.rootdir}-bin/bin"/>
+    	<copy todir="${APPIA.web}/${APPIA.rootdir}-bin/bin">
+    		<fileset dir="${APPIA.rootdir}/bin">
+    			<include name="*"/>
+    		</fileset>
+		</copy>
+    	<mkdir dir="${APPIA.web}/${APPIA.rootdir}-bin/config"/>
+    	<copy todir="${APPIA.web}/${APPIA.rootdir}-bin/config">
+    		<fileset dir="${APPIA.rootdir}/config">
+    			<include name="**"/>
+    		</fileset>
+	</copy>
+    	<tar basedir="${APPIA.web}" destfile="${APPIA.web}/${APPIA.releasefilename}-${APPIA.version}-bin.tgz" compression="gzip" includes="${APPIA.rootdir}-bin/**" />
+    </target>
+	
+
+    <!-- ================================= 
+          target: doc              
+         ================================= -->
+    <target name="doc" depends="structure" description=" ">
+        <ant dir="${APPIA.rootdir}" antfile="build.xml" target="doc"/>
+    	<copy todir="${APPIA.web}">
+    		<fileset dir="${APPIA.rootdir}" includes="doc/**"/>
+    	</copy>
+    	<move file="${APPIA.web}/doc" tofile="${APPIA.web}/${APPIA.releasefilename}-${APPIA.version}-doc"/>
+    	<tar basedir="${APPIA.web}" destfile="${APPIA.web}/${APPIA.releasefilename}-${APPIA.version}-doc.tgz" compression="gzip" includes="${APPIA.releasefilename}-${APPIA.version}-doc/**" />
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: all                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="all" depends="src,bin,doc"/>
+
+
+</project>

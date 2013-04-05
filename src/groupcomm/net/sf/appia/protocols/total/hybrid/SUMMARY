@@ -1,0 +1,7 @@
+NAME="Hybrid Total Order Protocol"
+FILE="TotalHybrid"
+VERSION="1.0"
+DATE="2001/05/24"
+AUTHOR="Pedro Vicente"
+DESCRIPTION="Total Order protocol that combines two different aproaches, sequencer and causal based. The protocol adapts itself to the topology of the network using the best algorithm for each group member."
+

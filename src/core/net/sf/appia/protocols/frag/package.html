@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>org.continuent.appia.protocols.frag</title>
+  </head>
+
+  <body>
+    <p>
+      This protocol fragments messages according to the lower layers
+      maximum Protocol Data Unit (PDU) Size. 
+    </p>
+    <p>
+      Messages are splited in the following way:
+    <ul>
+      <li>all but the last fragment are sent on FragEvent events</li> 
+      <li>the last fragment is sent with the original event type</li> 
+    </ul>
+    upon reception, all but the last fragment are concatenated in the
+    last one, and this one is the event sent to channel.
+    <p>
+      Headers contains two fields:
+    <ul>
+      <li>a unique msgid</li>
+      <li>a fragment number</li>
+    </ul>
+    <p>
+      This protocol does not provide reliability. If a fragment is
+      received out-of-order, the whole message is discarded. In order
+      to provide reliable delivery, a reliable protocol (like FIFO)
+      should be provided bellow the fragmentation protocol. 
+    </p>
+  </body>
+</html>

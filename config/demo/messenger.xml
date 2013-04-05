@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appia PUBLIC "-//DTDName//DTD//EN"
+	"http://appia.di.fc.ul.pt/xml/3.2.1/appiaxml.dtd">
+<appia>
+<template name="text">
+	<session name="tcp" sharing="global">
+		<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="gbl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.bottom.GroupBottomLayer</protocol>
+	</session>
+	<session name="gol" sharing="label">
+		<protocol>net.sf.appia.protocols.group.heal.GossipOutLayer</protocol>
+	</session>
+	<session name="suspectl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.suspect.SuspectLayer</protocol>
+	</session>		
+	<session name="intral" sharing="label">
+		<protocol>net.sf.appia.protocols.group.intra.IntraLayer</protocol>
+	</session>
+	<session name="interl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.inter.InterLayer</protocol>
+	</session>
+	<session name="hl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.heal.HealLayer</protocol>
+	</session>
+	<session name="stablel" sharing="label">
+		<protocol>net.sf.appia.protocols.group.stable.StableLayer</protocol>
+	</session>
+	<session name="ll" sharing="label">
+		<protocol>net.sf.appia.protocols.group.leave.LeaveLayer</protocol>
+	</session>
+	<session name="vsl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.sync.VSyncLayer</protocol>
+	</session>
+	<session name="msg" sharing="label">
+		<protocol>net.sf.appia.test.xml.MessengerLayer</protocol>
+	</session>
+</template>
+<template name="draw">
+	<session name="tcp" sharing="global">
+		<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+		<session name="gbl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.bottom.GroupBottomLayer</protocol>
+	</session>
+	<session name="gol" sharing="label">
+		<protocol>net.sf.appia.protocols.group.heal.GossipOutLayer</protocol>
+	</session>
+	<session name="suspectl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.suspect.SuspectLayer</protocol>
+	</session>		
+	<session name="intral" sharing="label">
+		<protocol>net.sf.appia.protocols.group.intra.IntraLayer</protocol>
+	</session>
+	<session name="interl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.inter.InterLayer</protocol>
+	</session>
+	<session name="hl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.heal.HealLayer</protocol>
+	</session>
+	<session name="stablel" sharing="label">
+		<protocol>net.sf.appia.protocols.group.stable.StableLayer</protocol>
+	</session>
+	<session name="ll" sharing="label">
+		<protocol>net.sf.appia.protocols.group.leave.LeaveLayer</protocol>
+	</session>
+	<session name="vsl" sharing="label">
+		<protocol>net.sf.appia.protocols.group.sync.VSyncLayer</protocol>
+	</session>
+	<session name="msg" sharing="label">
+		<protocol>net.sf.appia.test.xml.MessengerLayer</protocol>
+	</session>
+</template>
+</appia>

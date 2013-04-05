@@ -1,0 +1,7 @@
+NAME="Total-Causal Order Protocol"
+FILE="TotalCausal"
+VERSION="1.0"
+DATE="2001/05/24"
+AUTHOR="Sérgio Formigo"
+DESCRIPTION="This protocol uses the Lamport logical clock total-causal order algorithm"
+

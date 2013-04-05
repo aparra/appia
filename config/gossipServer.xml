@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appia PUBLIC "-//DTDName//DTD//EN"
+	"http://appia.di.fc.ul.pt/xml/3.2.1/appiaxml.dtd">
+<appia>
+	<template name="Gossip Group Template">
+	<session name="udp" sharing="private">
+		<protocol>net.sf.appia.protocols.udpsimple.UdpSimpleLayer</protocol>
+	</session>
+	<session name="fifo" sharing="private">
+		<protocol>net.sf.appia.protocols.fifo.FifoLayer</protocol>
+	</session>
+	<session name="gbl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.bottom.GroupBottomLayer</protocol>
+	</session>
+	<session name="gol" sharing="private">
+		<protocol>net.sf.appia.protocols.group.heal.GossipOutLayer</protocol>
+	</session>
+	<session name="suspectl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.suspect.SuspectLayer</protocol>
+	</session>		
+	<session name="intral" sharing="private">
+		<protocol>net.sf.appia.protocols.group.intra.IntraLayer</protocol>
+	</session>
+	<session name="interl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.inter.InterLayer</protocol>
+	</session>
+	<session name="hl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.heal.HealLayer</protocol>
+	</session>
+	<session name="stablel" sharing="private">
+		<protocol>net.sf.appia.protocols.group.stable.StableLayer</protocol>
+	</session>
+	<session name="ll" sharing="private">
+		<protocol>net.sf.appia.protocols.group.leave.LeaveLayer</protocol>
+	</session>
+	<session name="vsl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.sync.VSyncLayer</protocol>
+	</session>
+	<session name="gossip" sharing="label">
+		<protocol>net.sf.appia.protocols.gossipServer.GossipServerLayer</protocol>
+	</session>
+	</template>
+
+	<template name="Gossip Client Template">
+	<session name="udp" sharing="private">
+		<protocol>net.sf.appia.protocols.udpsimple.UdpSimpleLayer</protocol>
+	</session>
+	<session name="fifo" sharing="private">
+		<protocol>net.sf.appia.protocols.fifo.FifoLayer</protocol>
+	</session>
+	<session name="gossip" sharing="label">
+		<protocol>net.sf.appia.protocols.gossipServer.GossipServerLayer</protocol>
+	</session>
+	</template>
+
+	<channel name="Gossip Channel" template="Gossip Client Template" initialized="yes" label="Gossip Shared">
+		<chsession name="gossip">
+			<!-- DEFAULTS
+			<parameter name="port">10000</parameter>
+			<parameter name="remove_time">20000</parameter>
+			<parameter name="timer">1000</parameter>
+			<parameter name="debug">false</parameter>
+			<parameter name="gossip">localhost:10000</parameter>
+			-->
+		</chsession>
+	</channel>
+
+	<channel name="Gossip Group Channel" template="Gossip Group Template" initialized="yes" label="Gossip Shared"/>
+</appia>

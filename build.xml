@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Appia: Group communication and protocol composition framework library
+ * Copyright 2006-2007 University of Lisboa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ *
+ * Initial developer(s): Alexandre Pinto and Nuno Carvalho.
+ * Contributor(s): See Appia web page for a list of contributors.
+ -->
+
+<project basedir="." default="dist" name="APPIA">
+	<!-- customizable properties -->
+	<property file="build.properties" />
+	
+    <property name="APPIA.src-core" location="src/core"/>
+    <property name="APPIA.src-groupcomm" location="src/groupcomm"/>
+    <property name="APPIA.src-test" location="src/test"/>
+    <property name="APPIA.classes" location="classes"/>
+    <property name="APPIA.libs" location="lib"/>
+    <property name="APPIA.dist" location="dist"/>
+    <property name="APPIA.doc" location="doc"/>
+
+	<path id="project.classpath">
+        <pathelement location="${APPIA.classes}"/>
+    	<fileset dir="${APPIA.libs}">
+    		<include name="*"/>
+    	</fileset>
+    </path>
+	<path id="project.src.path">
+	    <pathelement location="${APPIA.src-core}"/>
+	    <pathelement location="${APPIA.src-groupcomm}"/>
+	    <pathelement location="${APPIA.src-test}"/>
+	</path>
+	
+    <target name="init">
+		<mkdir dir="${APPIA.classes}"/>
+    	<mkdir dir="${APPIA.doc}"/>
+    	<mkdir dir="${APPIA.dist}"/>    	
+  	</target>
+
+    <!-- ================================= 
+          target: clean              
+         ================================= -->
+    <target name="clean" description="Cleans doc and classes directories">
+    	<delete dir="${APPIA.classes}"/>
+    	<delete dir="${APPIA.doc}"/>
+    	<delete dir="${APPIA.dist}"/>
+    </target>
+
+
+    <!-- ================================= 
+          target: build-core
+         ================================= -->
+    <target name="build-core" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac destdir="${APPIA.classes}" encoding="ISO8859-1" source="${javac.source}" 
+        		target="${javac.target}" debug="${javac.debug}" depend="${javac.depend}" 
+			deprecation="${javac.deprecation}" optimize="${javac.optimize}">
+            <src path="${APPIA.src-core}"/>
+            <classpath refid="project.classpath"/>
+        </javac>
+    </target>
+	
+    <!-- ================================= 
+          target: build-groupcomm
+         ================================= -->
+    <target name="build-groupcomm" depends="build-core">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac destdir="${APPIA.classes}" encoding="ISO8859-1" source="${javac.source}" 
+        		target="${javac.target}" debug="${javac.debug}" depend="${javac.depend}" 
+			deprecation="${javac.deprecation}" optimize="${javac.optimize}">
+            <src path="${APPIA.src-groupcomm}"/>
+            <classpath refid="project.classpath"/>
+        </javac>
+    </target>
+
+    <!-- ================================= 
+          target: build-test
+         ================================= -->
+    <target name="build-test" depends="build-core,build-groupcomm">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac destdir="${APPIA.classes}" encoding="ISO8859-1" source="${javac.source}" 
+        		target="${javac.target}" debug="${javac.debug}" depend="${javac.depend}" 
+			deprecation="${javac.deprecation}" optimize="${javac.optimize}">
+            <src path="${APPIA.src-test}"/>
+            <classpath refid="project.classpath"/>
+        </javac>
+    </target>
+	
+    <!-- ================================= 
+          target: build-all
+         ================================= -->
+    <target name="build-all" depends="build-core,build-groupcomm,build-test">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+    </target>
+	
+    <!-- ================================= 
+          target: doc              
+         ================================= -->
+    <target name="doc" depends="init" description="Creates Appia Javadoc">
+        <javadoc sourcepathref="project.src.path" 
+        	destdir="${APPIA.doc}" 
+        	charset="ISO8859-1" encoding="ISO8859-1" use="true" >
+        	<header>Appia Documentation</header>
+        	<doctitle>Appia version ${APPIA.version}</doctitle>
+        	<bottom>
+        		<![CDATA[COPYRIGHT 2006-2009, University of Lisbon and INESC-ID<BR>For updates and related information please see <A HREF="http://appia.di.fc.ul.pt/">Appia Home Page</A><BR>Send questions, sugestions or remarks to the <A HREF="mailto:appia-users@lists.sourceforge.net">appia-users mailing list</A>]]>
+        	</bottom>
+			<classpath>
+		    	<fileset dir="${APPIA.libs}">
+		    		<include name="*"/>
+		    	</fileset>				
+			</classpath>
+        </javadoc>
+    </target>
+	
+    <!-- ================================= 
+          target: core-jar              
+         ================================= -->
+    <target name="core-jar" depends="build-core" description="Create the Appia core jar file.">
+        <jar destfile="${APPIA.dist}/${APPIA.corejar}-${APPIA.version}.jar">
+        	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/core/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/management/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+	       		<filename name="net/sf/appia/protocols/common/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/drop/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+	       		<filename name="net/sf/appia/protocols/fifo/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/fifounreliable/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/frag/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/nakfifo/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/sslcomplete/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/tcpcomplete/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/udpsimple/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/utils/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/xml/**"/>
+       		</fileset>
+			<manifest>
+				<attribute name="Specification-Title" value="${specification.title}"/>
+				<attribute name="Specification-Version" value="${APPIA.version}"/>
+				<attribute name="Specification-Vendor" value="${specification.vendor}"/>
+				<attribute name="Implementation-Title" value="${specification.title}"/>
+				<attribute name="Implementation-Version" value="${version}"/>
+				<attribute name="Implementation-Vendor" value="${specification.vendor}"/>
+			</manifest>
+        	</jar>
+    </target>
+
+    <!-- ================================= 
+          target: groupcomm-jar              
+         ================================= -->
+    <target name="groupcomm-jar" depends="build-groupcomm" description="Create the Appia jar file for group communication.">
+        <jar destfile="${APPIA.dist}/${APPIA.groupcommjar}-${APPIA.version}.jar">
+        	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/jgcs/**"/>
+           		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/causalWaiting/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/group/**"/>
+      		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/loopBack/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/total/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/uniform/**"/>
+      		</fileset>
+         	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/gossip/**"/>
+     		</fileset>
+        	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/gossipServer/**"/>
+       		</fileset>
+			<manifest>
+				<attribute name="Specification-Title" value="${specification.title}"/>
+				<attribute name="Specification-Version" value="${APPIA.version}"/>
+				<attribute name="Specification-Vendor" value="${specification.vendor}"/>
+				<attribute name="Implementation-Title" value="${specification.title}"/>
+				<attribute name="Implementation-Version" value="${version}"/>
+				<attribute name="Implementation-Vendor" value="${specification.vendor}"/>
+			</manifest>
+        	</jar>
+    </target>
+
+    <!-- ================================= 
+          target: tests-jar              
+         ================================= -->
+    <target name="tests-jar" depends="build-test" description="Create the Appia jar file for tests and demo protocols.">
+        <jar destfile="${APPIA.dist}/${APPIA.testjar}-${APPIA.version}.jar">
+        	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/demo/**"/>
+       		</fileset>
+           	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/measures/**"/>
+    		</fileset>
+         	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/protocols/test/**"/>
+     		</fileset>
+         	<fileset dir="${APPIA.classes}">
+        		<filename name="net/sf/appia/test/**"/>
+       		</fileset>
+			<manifest>
+				<attribute name="Specification-Title" value="${specification.title}"/>
+				<attribute name="Specification-Version" value="${APPIA.version}"/>
+				<attribute name="Specification-Vendor" value="${specification.vendor}"/>
+				<attribute name="Implementation-Title" value="${specification.title}"/>
+				<attribute name="Implementation-Version" value="${version}"/>
+				<attribute name="Implementation-Vendor" value="${specification.vendor}"/>
+			</manifest>
+        	</jar>
+    </target>
+
+    <!-- ================================= 
+          target: jars              
+         ================================= -->
+    <target name="jars" depends="core-jar,groupcomm-jar" description="Creates all jar files."/>
+
+    <!-- ================================= 
+          target: dist              
+         ================================= -->
+    <target name="dist" depends="jars,tests-jar" description="Distribution">
+    	<copy todir="${APPIA.dist}">
+			<fileset dir="${APPIA.libs}">
+				<exclude name="README.txt"/>
+			</fileset>
+    	</copy>
+    	<chmod perm="ugo+x" dir="." includes="*.sh" verbose="true" />
+    	
+    	<echo message="Build completed. You can add all jar files of the dist directory to your aplication classpath."/>
+    </target>
+</project>

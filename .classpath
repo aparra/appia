@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/test"/>
+	<classpathentry kind="src" path="src/groupcomm"/>
+	<classpathentry kind="src" path="src/core"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/jgcs-0.6.1.jar" sourcepath="/jgcs"/>
+	<classpathentry kind="lib" path="lib/flanagan.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

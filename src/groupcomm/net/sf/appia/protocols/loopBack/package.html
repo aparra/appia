@@ -1,0 +1,11 @@
+<html>
+  <title>org.continuent.appia.protocols.loopback</title>
+  <body>
+  This protocol simulates loopback on top of group communication. 
+  It sends a copy to the upper layers of all GroupSendableEvents that it receives from above. 
+  This is used to simulate broadcast (all members, including the sender receive the message).
+  This is needed because the broadcast semantic of the group communication protocols is that all members
+  except the sender receive the message that was sent to the group. Some protocols need to received
+  their own messages. In that case, it should put this layer on the protocol stack.
+  </body>
+</html>

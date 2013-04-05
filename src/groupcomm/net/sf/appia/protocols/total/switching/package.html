@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>org.continuent.appia.protocols.total.switching</title>
+  </head>
+
+  <body>
+<p>
+ Protocol that implements an algorithm to switch between Total Order algorithms.
+</p>
+<p>
+If the parameter <i>firstChannel</i> is defined, then the corresponding channel
+is used initially. Otherwise, the initial channel is the one associated with
+the first ChannelInit received by this session.
+</p>
+<p>
+Configuration parameters:<br>
+<ul>
+<li> <b>topChannel [<string>]:</b> the top channel name. Default: <i>topChannel</i>
+<li> <b>firstChannel [<string>]:</b> the initial bottom channel name. Default: First channel 
+</ul>
+  </body>
+</html>

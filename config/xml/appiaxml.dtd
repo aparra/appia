@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT appia (template*,management?,channel*)>
+<!ATTLIST appia
+	multischedulers (yes|no) #IMPLIED
+	scheduler CDATA #IMPLIED
+	threadFactory CDATA #IMPLIED>
+<!ELEMENT template (session+)>
+<!ATTLIST template 
+	name CDATA #REQUIRED>
+<!ELEMENT session (protocol)>
+<!ATTLIST session 
+	name CDATA #REQUIRED 
+	sharing (private|label|global) #REQUIRED>
+<!ELEMENT protocol (#PCDATA)>
+<!ELEMENT management EMPTY>
+<!ATTLIST management
+	naming_host CDATA #IMPLIED
+	naming_port CDATA #IMPLIED
+	local (yes|no) #IMPLIED>
+<!ELEMENT channel (memorymanagement?,chsession*)>
+<!ATTLIST channel
+	name CDATA #REQUIRED
+	template CDATA #REQUIRED
+	initialized (yes|no) #REQUIRED
+	managed (yes|no) #IMPLIED
+	label CDATA #IMPLIED
+	messageFactory CDATA #IMPLIED>
+<!ELEMENT chsession (parameter*)>
+<!ATTLIST chsession
+	name CDATA #REQUIRED>
+<!ELEMENT parameter (#PCDATA)>
+<!ATTLIST parameter
+	name CDATA #REQUIRED>
+<!ELEMENT memorymanagement EMPTY>
+<!ATTLIST memorymanagement
+	size CDATA #REQUIRED
+	up_threshold CDATA #REQUIRED
+	down_threshold CDATA #REQUIRED>

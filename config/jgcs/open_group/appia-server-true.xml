@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appia PUBLIC "-//DTDName//DTD//EN"
+         "../../xml/appiaxml.dtd">
+
+<appia>
+
+<template name="tcp_total_services">
+	<session name="TCPSession" sharing="global">
+		<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="gbl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.bottom.GroupBottomLayer</protocol>
+	</session>
+	<session name="gol" sharing="private">
+		<protocol>net.sf.appia.protocols.group.remote.RemoteGossipOutLayer</protocol>
+	</session>
+	<session name="suspectl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.suspect.SuspectLayer</protocol>
+	</session>
+	<session name="intral" sharing="private">
+		<protocol>net.sf.appia.protocols.group.intra.IntraLayer</protocol>
+	</session>
+	<session name="interl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.inter.InterLayer</protocol>
+	</session>
+	<session name="hl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.heal.HealLayer</protocol>
+	</session>
+	<session name="stablel" sharing="private">
+		<protocol>net.sf.appia.protocols.group.stable.StableLayer</protocol>
+	</session>
+	<session name="ll" sharing="private">
+		<protocol>net.sf.appia.protocols.group.leave.LeaveLayer</protocol>
+	</session>
+	<session name="vsl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.sync.VSyncLayer</protocol>
+	</session>
+	<session name="primary" sharing="private">
+		<protocol>net.sf.appia.protocols.group.primary.PrimaryViewLayer</protocol>
+	</session>
+	<session name="causal" sharing="private">
+		<protocol>net.sf.appia.protocols.causalWaiting.CausalWaitingLayer</protocol>
+	</session>
+	<session name="loopback" sharing="private">
+		<protocol>net.sf.appia.protocols.loopBack.LoopBackLayer</protocol>
+	</session>
+	<session name="total" sharing="private">
+		<protocol>net.sf.appia.protocols.total.seto.SETOLayer</protocol>
+	</session>
+	<session name="atsl" sharing="private">
+		<protocol>net.sf.appia.jgcs.protocols.top.TOPLayer</protocol>
+	</session>
+</template>
+
+<template name="tcp">
+	<session name="TCPSession" sharing="global">
+		<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="atsl" sharing="private">
+		<protocol>net.sf.appia.jgcs.protocols.top.SimpleTOPLayer</protocol>
+	</session>
+</template>
+
+<channel name="rrpc_group" template="tcp_total_services" initialized="no">
+	<!-- <memorymanagement size="80000000" up_threshold="30000000" down_threshold="14000000" /> -->
+	<chsession name="atsl">
+		<parameter name="gossip_address">10.0.1.2:10000</parameter>
+	</chsession>
+	<chsession name="primary">
+		<parameter name="primary">true</parameter>
+	</chsession>
+	<chsession name="total">
+		<parameter name="uniform_info_period">1</parameter>
+	</chsession>
+</channel>
+
+<channel name="rrpc" template="tcp" initialized="no">
+	<!-- <memorymanagement size="80000000" up_threshold="30000000" down_threshold="14000000" /> -->
+	<chsession name="atsl">
+	</chsession>
+</channel>
+
+</appia>

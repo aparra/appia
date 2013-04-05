@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appia PUBLIC "-//DTDName//DTD//EN"
+         "../../xml/appiaxml.dtd">
+
+<appia>
+
+<template name="tcp">
+	<session name="TCPSession" sharing="private">
+		<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="remoteview" sharing="private">
+		<protocol>net.sf.appia.protocols.group.remote.RemoteViewLayer</protocol>
+	</session>
+	<session name="remoteaddr" sharing="private">
+		<protocol>net.sf.appia.jgcs.protocols.remote.RemoteAddressLayer</protocol>
+	</session>
+	<session name="atsl" sharing="private">
+		<protocol>net.sf.appia.jgcs.protocols.top.SimpleTOPLayer</protocol>
+	</session>
+</template>
+
+<management local="yes" />
+
+<channel name="rrpc" template="tcp" initialized="no" managed="yes">
+	<!-- <memorymanagement size="80000000" up_threshold="30000000" down_threshold="14000000" /> -->
+	<chsession name="remoteview">
+		<parameter name="gossip">10.0.1.2:10000</parameter>
+	</chsession>
+	<chsession name="remoteaddr">
+		<parameter name="group">group</parameter>
+	</chsession>
+</channel>
+
+</appia>

@@ -1,0 +1,20 @@
+<html>
+	<title>net.sf.appia.demo.jgcs.opengroup</title>
+	<body>
+<p> This example shows how to use and configure Appia with jGCS
+ using an open group, where there is a group of servers that accept
+ Messages from external members. 
+ The example only shows how to configure and use, and it only sends
+ dummy messages. It does not intend to implement any algorithm.
+</p>
+<p> 
+ The example is composed by a server and a client. For this example to work,
+ a gossip server must be used. To run the examples, use the following commands:
+ <br> To run a single gossip server: java -cp classes/:lib/log4j-1.2.14.jar net.sf.appia.gossip.GossipServer -port 10000 -debug -solo
+ <br> To run a server: java -cp classes/:lib/log4j-1.2.14.jar:lib/jgcs-0.6.1.jar:config/jgcs/open_group net.sf.appia.demo.jgcs.opengroup.ServerOpenGroupTest confijgcs/open_group/server.xml
+ <br> To run a client:  java -cp classes/:lib/log4j-1.2.14.jar:lib/jgcs-0.6.1.jar:config/jgcs/open_group net.sf.appia.demo.jgcs.opengroup.ClientOpenGroupTest config/jgcs/open_group/client.xml
+ <p>
+ Note that before running this example, the address of the gossip must be properly set
+ in the server.xml and client.xml files.
+	</body>
+</html>

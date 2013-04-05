@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appia PUBLIC "-//DTDName//DTD//EN"
+         "http://appia.di.fc.ul.pt/xml/3.2/appiaxml.dtd">
+
+<appia>
+
+<template name="tcp_total">
+	<session name="TCPSession" sharing="global">
+			<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="gbl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.bottom.GroupBottomLayer</protocol>
+	</session>
+	<session name="gol" sharing="private">
+		<protocol>net.sf.appia.protocols.group.remote.RemoteGossipOutLayer</protocol>
+	</session>
+	<session name="suspectl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.suspect.SuspectLayer</protocol>
+	</session>
+	<session name="intral" sharing="private">
+		<protocol>net.sf.appia.protocols.group.intra.IntraLayer</protocol>
+	</session>
+	<session name="interl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.inter.InterLayer</protocol>
+	</session>
+	<session name="hl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.heal.HealLayer</protocol>
+	</session>
+	<session name="stablel" sharing="private">
+		<protocol>net.sf.appia.protocols.group.stable.StableLayer</protocol>
+	</session>
+	<session name="ll" sharing="private">
+		<protocol>net.sf.appia.protocols.group.leave.LeaveLayer</protocol>
+	</session>
+	<session name="vsl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.sync.VSyncLayer</protocol>
+	</session>
+	<session name="total" sharing="private">
+		<protocol>net.sf.appia.protocols.total.sequencer.TotalSequencerLayer</protocol>
+	</session>
+	<session name="atsl" sharing="private">
+		<protocol>net.sf.appia.jgcs.protocols.top.TOPLayer</protocol>
+	</session>
+</template>
+
+<template name="tcp">
+	<session name="TCPSession" sharing="global">
+			<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="atsl" sharing="private">
+		<protocol>net.sf.appia.jgcs.protocols.top.SimpleTOPLayer</protocol>
+	</session>
+</template>
+
+<channel name="rrpc_group" template="tcp_total" initialized="no">
+	<memorymanagement size="40000000" up_threshold="15000000" down_threshold="7000000" />
+	<chsession name="atsl">
+		<parameter name="gossip_address">10.10.0.2:10000</parameter>
+	</chsession>
+</channel>
+
+<channel name="rrpc" template="tcp" initialized="no">
+	<memorymanagement size="40000000" up_threshold="15000000" down_threshold="7000000" />
+	<chsession name="atsl">
+	</chsession>
+</channel>
+
+</appia>

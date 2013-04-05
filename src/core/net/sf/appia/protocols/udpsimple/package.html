@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>org.continuent.appia.protocols.udpsimple</title>
+  </head>
+
+  <body>
+    <p>
+      UDP network interface for Appia.
+    </p>
+    <p>
+      Sended messages are serialized in a byte array with the
+      following syntax: event class name, channel id, 
+      msg. All fields except msg are prefixed by a byte with their
+      length.
+    </p>
+    <p>
+      The UdpSimple protocol expects to receive SendableEvents having
+      the source and dest attributes of type InetWithPort.
+    </p>
+    <p>
+      Prior to sending messages, each UdpSimple session must receive a
+      RegisterSocketEvent stating the UDP port that it should use to
+      send and receive events from the network.
+    </p>
+    <p>
+      If the session detects that a message could not be delivered, it
+      issues a SendableNotDelivered event.
+    </p>
+    <p>
+      <b>Change log:</b>
+      <dl><dt>21/11/2000</dt>
+	<dd>Source and dest attributes of SendableEvents were removed
+      from the serialized message. These values are obtained in the
+      receiver by querying the DatagramPacket object.</dd>
+      <dd>InetWithPort equality operator changed to accept
+	comparisons with objects of different types. If this happens,
+	it will return false.</dd>
+  </dl>
+  </body>
+</html>

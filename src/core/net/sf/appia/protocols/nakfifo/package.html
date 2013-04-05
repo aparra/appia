@@ -1,0 +1,11 @@
+<html>
+  <title>org.continuent.appia.protocols.nakfifo</title>
+<body>
+Protocol providing reliable point-to-point FIFO delivery for SendableEvents.
+The main difference between this and the other <i>fifo</i> protocol is the use of NAKs for
+message retransmission.
+<br>
+The protocol operates better when not using network multicast support.
+It offers <i>AppiaMulticast</i> support to above layers by sending a event to each destination.
+</body>
+</html>

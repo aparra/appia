@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>org.continuent.appia.protocols.group.remote</title>
+  </head>
+
+  <body>
+    <p>
+      Gives to non-members of a group the possibility
+      of knowing the membership of a group.
+    </p>   
+    <p>
+      The members of the group must have the 
+      {@link net.sf.appia.protocols.group.remote.RemoteGossipOutLayer} in a
+      channel, replacing the tipical {@link net.sf.appia.protocols.group.heal.GossipOutLayer}.
+      Also the {@link net.sf.appia.protocols.group.remote.RemoteViewLayer} must
+      be in a channel of the application interested in knowing the 
+      membership.
+    </p>
+    <p>
+      In order to take advantage of this functionality
+      a gossip server must be running for the group.
+    </p>
+    <p>
+     The requests are sent trough a {@link net.sf.appia.protocols.group.remote.RemoteViewEvent}
+    </p>
+  </body>
+</html>

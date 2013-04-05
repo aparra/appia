@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appia PUBLIC "-//DTDName//DTD//EN"
+	"http://appia.di.fc.ul.pt/xml/3.2.1/appiaxml.dtd">
+<appia>
+	<template name="Uniform Tcp Template">
+	<session name="tcp" sharing="private">
+		<protocol>net.sf.appia.protocols.tcpcomplete.TcpCompleteLayer</protocol>
+	</session>
+	<session name="gbl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.bottom.GroupBottomLayer</protocol>
+	</session>
+	<session name="gol" sharing="private">
+		<protocol>net.sf.appia.protocols.group.heal.GossipOutLayer</protocol>
+	</session>
+	<session name="suspectl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.suspect.SuspectLayer</protocol>
+	</session>		
+	<session name="intral" sharing="private">
+		<protocol>net.sf.appia.protocols.group.intra.IntraLayer</protocol>
+	</session>
+	<session name="interl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.inter.InterLayer</protocol>
+	</session>
+	<session name="hl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.heal.HealLayer</protocol>
+	</session>
+	<session name="stablel" sharing="private">
+		<protocol>net.sf.appia.protocols.group.stable.StableLayer</protocol>
+	</session>
+	<session name="ll" sharing="private">
+		<protocol>net.sf.appia.protocols.group.leave.LeaveLayer</protocol>
+	</session>
+	<session name="vsl" sharing="private">
+		<protocol>net.sf.appia.protocols.group.sync.VSyncLayer</protocol>
+	</session>
+	<session name="loopbackl" sharing="private">
+		<protocol>net.sf.appia.protocols.loopback.LoopbackLayer</protocol>
+	</session>
+	<session name="uniforml" sharing="private">
+		<protocol>net.sf.appia.protocols.uniform.UniformLayer</protocol>
+	</session>
+	<session name="perf" sharing="private">
+		<protocol>net.sf.appia.test.perf.PerfLayer</protocol>
+	</session>
+	</template>
+
+	<channel name="Perf Channel" template="Perf Udp+NakFifoMulticast Template" initialized="no">
+		<chsession name="uniforml">
+			<parameter name="max_nodes">10</parameter>
+			<!--  OR -->
+			<!-- parameter name="majority_nodes">6</parameter-->
+		</chsession>
+		<chsession name="perf">
+			<!-- Example for ring test with two members and IP-Multicast address for gossip dissemination. -->
+			<parameter name="n">10</parameter>
+			<parameter name="k">100</parameter>
+			<parameter name="r">10</parameter>
+			<parameter name="m">100</parameter>
+			<parameter name="gossip">224.0.0.3:10001</parameter>
+		</chsession>
+	</channel>
+
+</appia>

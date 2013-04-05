@@ -1,0 +1,335 @@
+==========================
+04/01/2011   Version 4.1.2
+==========================
+
+(SVN revision 440)
+
+- Bug fix on the TcpComplete protocol (RegisterSocketEvent) on the case that no IP address was given 
+  and several network interfaces are present in the machine;
+- Added a sequencer based total order protocol that is based on SETO, but without the estimated optimistic deliveries. 
+  The new protocol (SequencerUniform) provides Uniform Total Order with optimistic deliveries.
+- Small fixes and code improvements.
+
+
+==========================
+15/09/2010   Version 4.1.1
+==========================
+
+(SVN revision 433)
+
+Removed NPE in ViewState.java;
+Added parameterized code in several classes;
+Fixed several bugs in the JMX management interfaces of Appia and added a wrapper for client applications to connect and manage an Appia process;
+Added management interfaces to the RemoteAddress protocol;
+Fixed some bugs in the JMX interfaces;
+Improved the code of the JMX interfaces and added the possibility to retrieve a local instance of the Channel dynamic managed bean;
+Improved the "open group" tests;
+Fixed minor issues in the TCPComplete protocol;
+Added the symmetric total order protocol;
+Added the hybrid total order protocol implemented by Pedro Vicente;
+Added a configuration for the uniformity info periodic timer;
+Solved an ArrayIndexOutOfBounds exception that hapened when Appia was configured to use several channels, the views were multiplexed and one of the channels is holding the view;
+Added JMX management to the token based total order protocol;
+Removed (commented) the code that delays the rotation of the token;
+Bugfix on the register socket event when the user wanted to bind to a specific address.
+
+==========================
+16/01/2009   Version 4.1.0
+==========================
+
+(SVN revision 387)
+
+Refactored all the code to separate the Appia core and the group communication protocols.
+With this change, now the Appia core can be used without having to carry lots of uneeded
+protocols if (for instance) you are building p2p protocols;
+Fixed some small issues in the jGCS implementation;
+Changed several protocols to use generics in their data structures;
+Added a new failure detector protocol (PhiSuspect) based on the work of Naohiro Hayashibara. This
+protocol was implemented by Dan Mihai Dumitriu. Thanks for the contribution!
+
+==========================
+06/12/2007   Version 4.0.1
+==========================
+
+(SVN revision 333)
+
+Fixed a small issue on the Appia kernel;
+Added examples that show how to use jGCS with Appia;
+Added some examples that show how to use open groups with Appia and jGCS;
+Fixed small issues in the RemoteView protocol.
+
+==========================
+29/10/2007   Version 4.0.0
+==========================
+
+(SVN revision 311)
+
+Replaced package names.
+Added JMX interfaces to retrieve information about Membership and Throughput;
+JMX interfaces are now created dynamically;
+Several bug fixes in the failure detector protocol;
+Introduced a sender thread in the TCP protocol to avoid blocking the Appia main thread;
+Fixed several issues on the Primary View protocol;
+Added the implementation of jGCS version 0.6.1. Appia is now fully jGCS compliant;
+Started using the Java 5 features, including the JMX implementation;
+Dropped mx4j libraries;
+
+========================
+25/06/2007   Version 3.3
+========================
+
+Release Notes:
+
+** Bug
+    * [APPIA-54] - Frag protocol should not create Messages explicitly
+    * [APPIA-69] - Improve failure detection in cases of high load of messages.
+    * [APPIA-76] - Several protocols must have a special case for the LeaveEvent.
+    * [APPIA-77] - Views are not properly handled by non primary elements by the primary protocol.
+    * [APPIA-79] - Error on parsing parameters in the GossipServer main class.
+    * [APPIA-80] - Creating a channel using a non-existant XML template results in a NullPointerException
+
+** New Feature
+    * [APPIA-32] - Add the Total Order switching protocol to the CVS head
+    * [APPIA-75] - Add JMX interfaces to the primary view protocol.
+
+** Task
+    * [APPIA-25] - Remove hand conversions from integer to byte[] and vice-versa on several protocols.
+    * [APPIA-51] - Update Javadoc on remote view protocol
+    * [APPIA-58] - Remove deprecated class org.continuent.appia.protocols.sslcomplete.SslCompleteConfig.
+    * [APPIA-63] - Remove deprecated class InetWithPort
+    * [APPIA-73] - Fix javadoc issues
+    * [APPIA-74] - Move the int to byte array conversions to an independent Util class.
+
+** Improvement
+    * [APPIA-23] - Reduce CPU consumption on TotalToken when not sending any messages.
+    * [APPIA-33] - Implement management interfaces in the TO switching protocol to change the TO protocol using JMX management. 
+    * [APPIA-49] - Change the retrievement method of the Appia ThreadFactory instance
+    * [APPIA-65] - Create an abstract Message factory
+    * [APPIA-66] - Thread and messages factories should be defined in the XML config file.
+    * [APPIA-67] - Make sleep time configurable in the token total order protocol.
+    * [APPIA-70] - Change the debug messages of the group communication protocols to use Log4j
+    * [APPIA-71] - Change the debug messages of several protocols to use Log4j
+    * [APPIA-72] - Filter block events on the primary view protocol when blocked on non-primary view.
+    * [APPIA-78] - Rewrite the uniform protocol.
+
+========================
+16/01/2007 Version 3.2.4
+========================
+
+Release Notes:
+
+** Bug
+    * [APPIA-55] - In NakFifoMulticast, the last channel used must be saved.
+    * [APPIA-61] - LoopBack protocol should not clone messages that are not to all members of the group.
+
+** New Feature
+    * [APPIA-1] - Initial configuration of a group membership
+
+** Task
+    * [APPIA-36] - Complete javadoc on XML classes
+    * [APPIA-59] - Document better the register socket event class
+    * [APPIA-60] - Add a getSocketAddress method in thr RegisterSocketEvent class.
+    * [APPIA-62] - Fix javadoc issues introduced recently
+    * [APPIA-64] - Create a XML example for the SSL protocol in the config/demo directory.
+
+** Improvement
+    * [APPIA-52] - Scheduled events when closing channel.
+    * [APPIA-56] - Replace InetSocketAddress by SocketAddress where is possible.
+    * [APPIA-57] - Allow XML configuration on the SslComplete protocol for the possible parameters
+
+
+========================
+15/09/2006 Version 3.2.3
+========================
+
+Release Notes:
+
+** Bug
+    * [APPIA-29] - NullPointerException on FifoSession
+
+** New Feature
+    * [APPIA-48] - Create Remote View Protocol
+
+** Task
+    * [APPIA-26] - Create hierarchy between Undelivered events.
+    * [APPIA-40] - Remove deprecated class ExtendedMessage
+
+** Improvement
+    * [APPIA-50] - Improve the Ecco example in order to be compliant with the new Appia features.
+
+
+========================
+15/09/2006 Version 3.2.2
+========================
+
+This release contains some bug fixes in the Message class and in the protocol that makes the interface
+between the Appia protocols and UDP sockets, when using multicast.
+
+Release Notes:
+
+** Bug
+    * [APPIA-44] - pop, push or peek methods of the Message class may lead to message corruption.
+    * [APPIA-45] - In some systems, binding the multicast socket of UdpSimple to the multicast address raises an exception
+
+** Task
+    * [APPIA-31] - Remove deprecated class org.continuent.appia.protocols.fifo.MulticastHeader
+
+** Improvement
+    * [APPIA-46] - Add info about a failure of a RegisterSocket Event in the event (Exception and Error code).
+
+========================
+06/09/2006 Version 3.2.1
+========================
+
+This release contains some important bug fixes in the message class and 
+an optimization in the same class when deserializing objects. It contains also a bug fix in 
+the DTD specification.
+
+Release notes: 
+
+** Bug
+    * [APPIA-39] - memorymanagement tag is not correctly configured in DTD file
+    * [APPIA-41] - Stream corrupted exception when using Appia with Sequoia under high load
+
+** New Feature
+    * [APPIA-43] - Create protocol to check the integrity of a message in any point of the channel stack, based in the message size.
+
+======================
+28/08/2006 Version 3.2
+======================
+
+This new version contains fixes for several issues on protocols, a new management interface for protocols to
+be accessed by JMX, and several improvements that include Thread management, Javadoc descriptions and exception
+handling. The issues solved for this release are listed as follows:
+
+** Bug
+    * [APPIA-18] - Remove System.currentTimeMillis() direct calls
+    * [APPIA-19] - Handling of IOException in the UdpSimpleSession (when sending to the socket) not being taken care properly.
+    * [APPIA-29] - NullPointerException on FifoSession
+
+** New Feature
+    * [APPIA-6] - Create JMX interfaces to manage Appia channels and parameters.
+    * [APPIA-12] - Add Trowable cause to Appia exceptions.
+
+** Task
+    * [APPIA-3] - Replace InetWithPort by InetSocketAddress
+
+** Improvement
+    * [APPIA-15] - Replace all Serializable Appia objects to the Externalizable interface.
+    * [APPIA-17] - Improve Exception handling in the XML configuration.
+    * [APPIA-20] - Create a Thread factory and create Threads from this factory. This threads are usually needed to receive messages from sockets.
+    * [APPIA-24] - Create a default runnable implementation for the Appia thread to ease the Appia interface with programmers.
+
+
+========================
+21/06/2006 Version 3.1.1
+========================
+
+- Several bug fixes in the SETO total order protocol and in the NakFifoMulticast protocol.
+
+======================
+27/04/2006 Version 3.1
+======================
+
+- Added push, pop and peek for InetSocketAddress in the Message class This is hidden in the push/pop/peekObject methods.
+- Added generic events to be used by total order protocols that need to provide information about message guarantees. 
+  These events are used to provide optimistic assumptions and guarantees about message delivery.
+- Added an optimistic sequencer based total order protocol that provides optimistic assumptions about message delivery.
+  Upon reception of a message, it forwards that message to the application and after that sends notifications about message
+  guaranties: SETO (estimated total order), when the message is considered optimistically ordered; Regular, 
+  when the message is ordered by the sequencer; Uniform, when the message is considered uniform.  
+- Refactored the total order protocols.
+- Removed several minor bug fixes.
+- Updated javadoc information.
+
+======================
+20/03/2006 Version 3.0
+======================
+
+- Changed Appia license from LGPL to Apache License version 2.0.
+- Refactored all the code to be hosted on Continuent.org GForge site.
+- Fixed several small issues.
+- Updated javadoc documentation.
+
+======================
+09/12/2005 Version 2.1
+======================
+
+- Protocols: Added new Total Order protocol, implemented using a token. 
+- Memory management: Added the funtionality of defining channels with memory management in XML.
+- Memory management: Added different thresholds for UP and DOWN events. Each directions has a different value for the threshold.
+- Event scheduling: Inserted the notion of priority on events. Timers have more priority then normal events.
+- Message: The classes ObjectsMessage, ExtendedMessage and Message were merged and there is only one message now.
+- Message: Added discardAll() method for performance tunning.
+- Bug fixes in the following functionalities:
+	- Some resources were not beeing garbage colected;
+	- Fragmentation of cloned messages.
+	- The localhost must be set using information of RegisterSocketEvent and this was not being done in several protocols.
+- Updated javadoc documentation.
+- Added serialVersionUIDs to Serializable objects.
+- Added XML support in several protocols.
+- Removed old deprecated code.
+
+======================
+20/09/2005 Version 2.0
+======================
+
+- Integrated XML capabilities.
+- New Negative-Acknoledgment FIFO (NakFifo) protocol.
+- Improved performance at protocol and kernel levels.
+- Definetly changed RegisterSocketEvent and InetWithPort classes from appia.protocols.udpsimple to appia.protocols.common packages.
+- RegisterSocketEvent now contains the local host address.
+- MulticastInitEvent replaced AppiaMulticastInitEvent.
+- Kernel support for several Appia instances running within the same process.
+- New and improved view merge protocol that supports the merge of several views in a single change.
+- Added distributed capability to GossiServer. Removed DistGossipServer.
+- Several Bugfixes.
+
+=======================
+9/10/2003 Version 1.9-2
+=======================
+
+- Deprecated the use of Direction and EventQualifier. Replaced by int. Classes remain to offer static values.
+- Optimized Message. Two new methods "popReadOnly" and "peekReadOnly" with improved performance.
+- Created ExtendedMessage with functionality previously in ObjectsMessage. ObjectsMessage remains for compatibility.
+- Rearrangement of certain classes location, namely InetWithPort and RegisterSocketEvent, to new package appia.protocols.common
+- New, more reliable, TCP layer.
+- New, more reliable, SSL layer.
+- Extended Appl demo application, to support SSL. Removed previous applications.
+- Several bug fixes.
+
+==========
+8/10/2002
+==========
+-Bug fixes and performance enhancements in group communication
+-New protocols
+-gossip and demo aplications are now in packages
+
+==========
+05/03/2002
+==========
+-Udp multcast support (udpsimple)
+-Uniform primitives to group communication (stable uniform)
+-Major re-write of the fifo protocol,better performance (fifo)
+-Ssl communication layers (sslsimple for point-to-point communication and sslcomplete for group communication), needs jdk1.4
+-Group Rpc system, supporting active and passive replication and limeted crash-recovery.
+-various bug fixes and performance enhancements in other protocols
+
+
+==========
+05/07/2001
+==========
+
+This latest release offers a revised virtual-synchrony enforcing protocol. 
+This new version removes:
+    - the "stable.Retransmit" and "sync.Sync" layers. 
+    - the "stable.Stable" and "stable.Stabilize" events.
+And adds:
+    - the "sync.VSync" layer.
+    - the "sync.Sync" event.
+    - the "stable.StableStorage" auxiliary class.
+
+Another important change is the deprecation of the "AsyncEvent" and the "Channel.makeAsync()" and "Channel.async(...)" methods. The new mechanisms to insert asynchronous events is to use the "Event.asyncGo(...)" method.
+
+Finally the "Appl" and "ApplMult" demo application changed to the directory "demo", and the "GossipServer" and "DistGossipServer" gossip applications changed to the "gossip" directory.
+ 
