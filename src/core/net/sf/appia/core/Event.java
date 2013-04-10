@@ -32,9 +32,11 @@
 
 import java.io.PrintStream;
 import java.security.InvalidParameterException;
+import java.util.Arrays;
 
 import net.sf.appia.core.events.SendableEvent;
 import net.sf.appia.core.events.channel.ChannelEvent;
+import net.sf.appia.core.events.channel.ChannelInit;
 import net.sf.appia.core.memoryManager.MemoryManager;
 
 
@@ -259,6 +261,8 @@ public class Event {
       throw new AppiaEventException(
       AppiaEventException.NOTINITIALIZED,
       "Event not initialized");
+
+    validateDeclaredEvent();
     
     // TODO: does this have any effect on performance ???
     // If so it can be commented.
@@ -268,6 +272,24 @@ public class Event {
       throw new AppiaEventException(AppiaEventException.WRONGTHREAD,"Method \"go\" called from outside the Appia thread");
     
     eventScheduler.insert(this);
+  }
+
+  private void validateDeclaredEvent() throws AppiaEventException {
+    if (getSourceSession() == null || this.getClass().equals(ChannelInit.class)) return;
+    
+    if (dir == Direction.UP) {
+        if (!hasDeclaredEvent(getSourceSession().getLayer().getProvidedEvents(), this.getClass()))
+            throw new AppiaEventException(AppiaEventException.UNWANTEDEVENT, 
+                    String.format("Provided event %s not declared in %s", this.getClass().getSimpleName(), getSourceSession().getLayer().getClass().getSimpleName()));
+    } else if (dir == Direction.DOWN) {
+        if (hasDeclaredEvent(getSourceSession().getLayer().getAcceptedEvents(), this.getClass()))
+            throw new AppiaEventException(AppiaEventException.UNWANTEDEVENT, 
+                    String.format("Provided event %s not declared in %s", this.getClass().getSimpleName(), getSourceSession().getLayer().getClass().getSimpleName()));
+    }
+  }
+
+  private boolean hasDeclaredEvent(Class<?>[] events, Class<?> event) {
+    return events != null && Arrays.asList(events).contains(event);
   }
   
   /**
